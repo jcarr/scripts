@@ -18,10 +18,12 @@ data = Array.new(height) {
   }
 }
 
-img = Magick::Image.new(width, height)
+img = Magick::Image.new(width/2, height)
 
 data.each_with_index do |row, row_index|
-  row.each_with_index do |item, column_index|
+  row.values_at(* row.each_index.select {|i| i.odd?}).each_with_index do |item, column_index|
+
+#  row.each_with_index do |item, column_index|
     img.pixel_color(column_index, height-1-row_index, "rgb(#{item.join(', ')})")
   end
 end
